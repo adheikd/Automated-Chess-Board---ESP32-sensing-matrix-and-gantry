@@ -1,5 +1,8 @@
 #include <Arduino.h>
-#include "Mux.h"
+#include <Mux.h>
+#include <chessboard.h>
+#include <uart.h>
+#include <moves.h>
 
 //
 //  PIN DEFINITIONS
