@@ -13,6 +13,7 @@
 #define HALL2 14
 #define HALL3 12
 
+// Swap order for PCB version - will make more sense on layout
 #define MUX_S0 17
 #define MUX_S1 5
 #define MUX_S2 18
