@@ -8,21 +8,17 @@
 //  PIN DEFINITIONS
 //
 
-
+HardwareSerial debug = Serial;
+HardwareSerial processor = Serial2;
 
 void setup() 
 {
-  Serial.begin(115200);
-  Serial2.begin(115200, SERIAL_8N1, 15, 13);
-
-  HardwareSerial debug = Serial;
-  HardwareSerial processor = Serial2;
+  debug.begin(115200);
+  processor.begin(115200, SERIAL_8N1, 15, 13);
   
   // Set LED pin mode
-  pinMode(LED,OUTPUT);
-  //pinMode(HALL1,INPUT);
+  //pinMode(LED,OUTPUT);
 
-  HardwareSerial debug = Serial;
   init_chessboard();
 }
 
@@ -48,7 +44,7 @@ void loop()
   
   // Prints board state to serial
   
-  print_board_state();
+  print_board_state(debug);
   delay(500);
   
 }
