@@ -5,3 +5,9 @@
 
     A GPIO will be set to low/high to indicate when a move is expected to occur
 */
+#include <Arduino.h>
+
+/*
+    Prints the board state to serial
+*/
+void print_board_state(HardwareSerial serialport);

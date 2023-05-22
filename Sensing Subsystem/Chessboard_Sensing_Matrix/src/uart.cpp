@@ -5,3 +5,27 @@
 
     A GPIO will be set to low/high to indicate when a move is expected to occur
 */
+#include <Arduino.h>
+#include <chessboard.h>
+#include <uart.h>
+
+void print_board_state(HardwareSerial serialport)
+{
+  for (int i = 0; i < dim; i++)
+  {
+    for (int j = 0; j < dim; j++)
+    {
+      if (board[i][j])
+      {
+        serialport.print("T");
+      }
+      else
+      {
+        serialport.print("F");
+      }
+    }
+    serialport.println();
+  }
+  
+  serialport.println();
+}
