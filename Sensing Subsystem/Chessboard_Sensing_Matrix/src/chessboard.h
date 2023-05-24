@@ -21,9 +21,8 @@
 #define MUX_Z 16
 
 // For reading GPIO values
-int hallState = 0;
+int hallState;
 
-// Init multiplexer
 using namespace admux;
 Mux rowselect(Pin(MUX_Z,OUTPUT,PinType::Digital),Pinset(MUX_S0,MUX_S1,MUX_S2));
 
@@ -31,10 +30,10 @@ Mux rowselect(Pin(MUX_Z,OUTPUT,PinType::Digital),Pinset(MUX_S0,MUX_S1,MUX_S2));
 
 // The size of the chessboard
 #define dim 3
-// 2D array; 
+// 2D array; contains each board's state, each row represents the 
 bool board[dim][dim];
-uint8_t mux_sel[3] = {MUX_S0,MUX_S1,MUX_S2};
-uint8_t cols[dim] = {HALL1,HALL2,HALL3};
+uint8_t mux_sel[3];
+uint8_t cols[dim];
 
 
 /*

@@ -5,7 +5,6 @@
 
     A GPIO will be set to low/high to indicate when a move is expected to occur
 */
-#include <Arduino.h>
 #include <chessboard.h>
 #include <uart.h>
 
