@@ -24,23 +24,7 @@ void setup()
 
 void loop() 
 {
-  for (int i = 0; i < dim; i++)
-  {
-    rowselect.write(HIGH,i);
-    delay(20);
-    for (int j = 0; j < dim; j++)
-    {
-      hallState = digitalRead(cols[j]);
-      if (hallState == LOW) 
-      {
-        board[i][j] = true;
-      }
-      else
-      {
-        board[i][j] = false;
-      }
-    }
-  }
+  refresh_state();
   
   // Prints board state to serial
   

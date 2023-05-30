@@ -8,19 +8,13 @@
 // Spot for multiplexer definition? \/
 
 
-
-// Initializes board state array as false
-bool board[dim][dim] = {false};
-
+//
 uint8_t mux_sel[3] = {MUX_S0,MUX_S1,MUX_S2};
 uint8_t cols[dim] = {HALL1,HALL2,HALL3};
 
-int hallState = 0;
 
 void init_chessboard()
 {
-
-
     // Set pins for multiplexer channels/row powering
   pinMode(MUX_EN,OUTPUT);
   digitalWrite(MUX_EN,LOW);
@@ -46,4 +40,27 @@ void init_chessboard()
     }
   }
   
+}
+
+void refresh_state()
+{
+  int hallState = 0;
+
+  for (int i = 0; i < dim; i++)
+  {
+    rowselect.write(HIGH,i);
+    delay(20);
+    for (int j = 0; j < dim; j++)
+    {
+      hallState = digitalRead(cols[j]);
+      if (hallState == LOW) 
+      {
+        board[i][j] = true;
+      }
+      else
+      {
+        board[i][j] = false;
+      }
+    }
+  }
 }
