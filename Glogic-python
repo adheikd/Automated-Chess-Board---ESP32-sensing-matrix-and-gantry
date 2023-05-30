@@ -1,1 +1,68 @@
+import time
+
+class ChessGame:
+    def __init__(self):
+        self.players = {'Player 1': {}, 'Player 2': {}}
+        self.board = [['p', 'x', 'p'],
+                      ['x', 'x', 'x'],
+                      ['x', 'k', 'x']]
+        self.current_player = None
+        self.clock_running = False
+
+    def start_game(self):
+        if self.current_player is None:
+            self.current_player = 'Player 1'
+            print("Game started. Player 1's turn.")
+        elif self.clock_running:
+            self.end_game()
+        else:
+            self.current_player = 'Player 1'
+            self.board = [['p', 'x', 'p'],
+                          ['x', 'x', 'x'],
+                          ['x', 'k', 'x']]
+            print("Game restarted. Player 1's turn.")
+        self.clock_running = True
+        self.start_clock()
+
+    def select_start_player(self):
+        # Code to select the starting player randomly
+        pass
+
+    def start_clock(self):
+        print(f"Clock started for {self.current_player}.")
+        while self.clock_running:
+            time.sleep(1)  # Simulating 1 second delay per turn
+            self.end_turn()
+
+    def end_turn(self):
+        self.send_state()
+        self.stop_clock()
+        self.switch_player()
+        self.start_clock()
+
+    def switch_player(self):
+        self.current_player = 'Player 2' if self.current_player == 'Player 1' else 'Player 1'
+        print(f"{self.current_player}'s turn.")
+
+    def stop_clock(self):
+        print(f"Clock stopped for {self.current_player}.")
+
+    def send_state(self):
+        player_state = {}
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                if self.board[i][j] != 'x':
+                    player_state[(i, j)] = self.board[i][j]
+        self.players[self.current_player] = player_state
+        print(f"Current state sent to the server for {self.current_player}.")
+
+    def read_state(self):
+       //
+
+    def end_game(self):
+        //
+
+# Creating an instance of the ChessGame class
+game = ChessGame()
+game.start_game()
 
