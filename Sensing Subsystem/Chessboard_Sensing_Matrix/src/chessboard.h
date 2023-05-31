@@ -44,18 +44,11 @@
 #define ENDMOVE 37
 
 
-using namespace admux;
-Mux rowselect(Pin(MUX_SIG,OUTPUT,PinType::Digital),Pinset(MUX_S0,MUX_S1,MUX_S2));
-
-// Arrays for easily reading values from MUX
-
 // The size of the chessboard
 #define dim 3
 // 2D array; contains each board's state
-volatile bool board[dim][dim];
+extern volatile bool board[dim][dim];
 
-//uint8_t mux_sel[3];
-//uint8_t cols[dim];
 
 
 /*

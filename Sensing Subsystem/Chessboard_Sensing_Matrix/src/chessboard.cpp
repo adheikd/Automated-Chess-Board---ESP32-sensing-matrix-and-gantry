@@ -6,9 +6,10 @@
 #include "chessboard.h"
 
 // Spot for multiplexer definition? \/
+using namespace admux;
+Mux rowselect(Pin(MUX_SIG,OUTPUT,PinType::Digital),Pinset(MUX_S0,MUX_S1,MUX_S2));
 
-
-//
+volatile bool board[dim][dim] = {0};
 uint8_t mux_sel[3] = {MUX_S0,MUX_S1,MUX_S2};
 uint8_t cols[dim] = {HALL1,HALL2,HALL3};
 

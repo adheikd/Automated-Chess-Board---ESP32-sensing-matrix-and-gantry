@@ -27,8 +27,6 @@ void loop()
   refresh_state();
   
   // Prints board state to serial
-  
   print_board_state(debug);
   delay(500);
-  
 }
