@@ -1,0 +1,45 @@
+import serial
+
+# Define UART serial connection parameters
+UART_PORT = '/dev/ttyUSB0'  # Replace with the appropriate serial port
+UART_BAUDRATE = 9600
+
+# Initialize the UART serial connection
+ser = serial.Serial(UART_PORT, UART_BAUDRATE)
+
+# Command: Perform UART test
+def uart_test():
+    ser.write(b"test\n")
+    response = ser.readline().decode().strip()
+    if response == "SUCCESS":
+        print("UART test successful")
+    else:
+        print("UART test failed")
+
+# Command: Send board state
+def send_board_state():
+    ser.write(b"state\n")
+    response = ser.readline().decode().strip()
+    print("Board state:", response)
+
+# Main loop
+while True:
+    # Wait for changes in sensor state (simulated using user input for demonstration purposes)
+    input("Press Enter to simulate sensor change...")
+
+    # Indicate start of a move by setting the COM pin low
+    ser.write(b"COM_LOW\n")
+
+    # Wait for move interpretation from coprocessor
+    move_description = ser.readline().decode().strip()
+
+    # Indicate end of the move by setting the COM pin high
+    ser.write(b"COM_HIGH\n")
+
+    # Process the move description received from the coprocessor
+    if move_description:
+        print("Move Description:", move_description)
+        # Perform necessary actions based on the move description
+        
+    # Optionally, perform other commands like sending the board state
+    send_board_state()
