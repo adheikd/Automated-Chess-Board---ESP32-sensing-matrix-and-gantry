@@ -27,6 +27,25 @@ void loop()
   refresh_state();
   
   // Prints board state to serial
-  print_board_state(debug);
-  delay(500);
+  //print_board_state(debug);
+  /*
+  for (int i = 0; i < dim; i++)
+  {
+    for (int j = 0; j < dim; j++)
+    {
+      if (board[i][j])
+      {
+        debug.print("T");
+      }
+      else
+      {
+        debug.print("F");
+      }
+    }
+    debug.println();
+  }*/
+  
+  debug.println();
+
+  delay(50);
 }
