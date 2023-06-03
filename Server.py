@@ -1,7 +1,7 @@
 # Import necessary libraries
 import flask
-import chess  # Example chess library
-import cnc_gantry  # Example CNC gantry library
+# import chess  # Example chess library
+# import cnc_gantry  # Example CNC gantry library
 
 # Create an instance of Flask app
 app = flask.Flask(__name__)
@@ -16,7 +16,7 @@ def handle_gcode():
     parsed_command = parse_gcode(gcode)
 
     # Execute the G-code command on the CNC gantry
-    cnc_gantry.execute_command(parsed_command)
+    # cnc_gantry.execute_command(parsed_command)
 
     # Return a response
     return "OK"
@@ -28,16 +28,16 @@ def handle_move():
     move = flask.request.json
 
     # Make the move on the chessboard
-    chess.make_move(move)
+    # chess.make_move(move)
 
     # Execute corresponding G-code command on the CNC gantry
-    gcode = generate_gcode(move)
-    cnc_gantry.execute_command(parse_gcode(gcode))
+    # gcode = generate_gcode(move)
+    # cnc_gantry.execute_command(parse_gcode(gcode))
 
     # Return a response
     return "OK"
 
 # Main entry point
-if __name__ == "__main__":
+def start_server():
     # Run the Flask app
     app.run()
