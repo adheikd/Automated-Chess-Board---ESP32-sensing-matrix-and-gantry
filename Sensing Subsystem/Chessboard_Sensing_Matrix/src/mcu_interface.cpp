@@ -88,3 +88,9 @@ void print_move_list()
   Serial.println('\n');
   
 }
+
+char char_index(int n)
+{
+    assert(n >= 0 && n <= 25);
+    return "abcdefghijklmnopqrstuvwxyz"[n];
+}

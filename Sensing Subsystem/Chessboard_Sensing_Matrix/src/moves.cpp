@@ -5,3 +5,23 @@
 #include "moves.h"
 
 extern std::list<PosChange> moveList = {};
+
+void clean_moves()
+{
+    
+}
+
+Move calculate_move()
+{
+    if (moveList.size() < 2)
+    {
+        // Returns default move (invalid, from A1 to A1)
+        return Move();
+    }
+    // 
+    if (moveList.size() == 2)
+    {
+
+    }
+
+}

@@ -26,14 +26,14 @@ void loop()
 
     // Continually refreshes the board state while the ENDMOVE button has 
     // not been pressed and the main board still wants a move 
-    while (digitalRead(ENDMOVE) == HIGH && digitalRead(COM) == LOW)
+    while (digitalRead(ENDMOVE) == HIGH /*&& digitalRead(COM) == LOW*/)
     {
       refresh_state();
       print_move_list();
 
     }
 
-    
+
     
     delay(500);
   }
