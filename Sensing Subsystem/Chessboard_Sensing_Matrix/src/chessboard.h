@@ -39,11 +39,6 @@
 #define MUX_EN 19
 #define MUX_SIG 16
 
-// Communications pin - main processor sets this value low when it wants a move to be made
-#define COM 36
-#define ENDMOVE 37
-
-
 // The size of the chessboard
 #define dim 3
 // 2D array; contains each board's state

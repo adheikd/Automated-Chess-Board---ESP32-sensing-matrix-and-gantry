@@ -1,51 +1,40 @@
 #include <Arduino.h>
 #include <Mux.h>
-#include <chessboard.h>
-#include <uart.h>
-#include <moves.h>
+#include "chessboard.h"
+#include "mcu_interface.h"
+#include "moves.h"
 
 //
 //  PIN DEFINITIONS
 //
 
-HardwareSerial debug = Serial;
-HardwareSerial processor = Serial2;
-
-void setup() 
+void setup()
 {
-  debug.begin(115200);
-  processor.begin(115200, SERIAL_8N1, 15, 13);
-  
-  // Set LED pin mode
-  //pinMode(LED,OUTPUT);
+  Serial.begin(115200);
+  Serial2.begin(115200, SERIAL_8N1, 15, 13);
 
   init_chessboard();
 }
 
 void loop() 
-{
-  refresh_state();
-  
+{ 
   // Prints board state to serial
-  //print_board_state(debug);
-  /*
-  for (int i = 0; i < dim; i++)
+  if (digitalRead(COM) == LOW)
   {
-    for (int j = 0; j < dim; j++)
-    {
-      if (board[i][j])
-      {
-        debug.print("T");
-      }
-      else
-      {
-        debug.print("F");
-      }
-    }
-    debug.println();
-  }*/
-  
-  debug.println();
+    // Clears the movelist at the start of a new move
+    moveList.clear();
 
-  delay(50);
+    // Continually refreshes the board state while the ENDMOVE button has 
+    // not been pressed and the main board still wants a move 
+    while (digitalRead(ENDMOVE) == HIGH && digitalRead(COM) == LOW)
+    {
+      refresh_state();
+      print_move_list();
+
+    }
+
+    
+    
+    delay(500);
+  }
 }
