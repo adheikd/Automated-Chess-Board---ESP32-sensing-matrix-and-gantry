@@ -5,8 +5,6 @@
 
     A GPIO will be set to low/high to indicate when a move is expected to occur
 */
-#include "moves.h"
-#include <chessboard.h>
 #include <mcu_interface.h>
 
 
@@ -62,11 +60,11 @@ void print_board_state_interface()
 void print_move_list()
 {
   Serial.println(moveList.size());
-  for (PosChange m : moveList)
+  for (PosChange m: moveList)
   {
-    Serial.print(m.row);
+    Serial.print(m.pos.row);
     Serial.print(", ");
-    Serial.print(m.col);
+    Serial.print(m.pos.col);
     Serial.print(", ");
     switch (m.direc)
     {
@@ -89,8 +87,33 @@ void print_move_list()
   
 }
 
+// Turns an index into a letter, in alphabetical order, starting with 0 -> a
 char char_index(int n)
 {
-    assert(n >= 0 && n <= 25);
-    return "abcdefghijklmnopqrstuvwxyz"[n];
+  assert(n >= 0 && n <= 25);
+  return "abcdefghijklmnopqrstuvwxyz"[n];
+}
+
+void send_move(Move newMove)
+{
+  switch (newMove.type)
+  {
+    case MoveType::invalid:
+    {
+      Serial.println("invalid");
+      break;
+    }
+    case MoveType::shift:
+    {
+      Serial.printf("shift %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row,
+                                      char_index(newMove.endPos.col), newMove.endPos.row);
+      break;
+    }
+    case MoveType::capture:
+    {
+      Serial.printf("capture %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row,
+                                        char_index(newMove.endPos.col), newMove.endPos.row);
+      break;
+    }
+  }
 }

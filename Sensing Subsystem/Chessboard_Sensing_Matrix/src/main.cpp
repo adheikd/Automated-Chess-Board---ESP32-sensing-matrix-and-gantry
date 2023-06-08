@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include <Mux.h>
-#include "chessboard.h"
-#include "mcu_interface.h"
-#include "moves.h"
+#include <mcu_interface.h>
 
 //
 //  PIN DEFINITIONS
@@ -18,6 +16,7 @@ void setup()
 
 void loop() 
 { 
+  
   // Prints board state to serial
   if (digitalRead(COM) == LOW)
   {
@@ -29,10 +28,12 @@ void loop()
     while (digitalRead(ENDMOVE) == HIGH /*&& digitalRead(COM) == LOW*/)
     {
       refresh_state();
+      clean_moves();
       print_move_list();
-
     }
 
+    clean_moves();
+    send_move(calculate_move());
 
     
     delay(500);

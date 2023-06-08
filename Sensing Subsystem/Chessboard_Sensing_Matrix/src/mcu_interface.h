@@ -6,6 +6,7 @@
     A GPIO will be set to low/high to indicate when a move is expected to occur
 */
 #include <Arduino.h>
+#include <chessboard.h>
 
 // Communications pin - main processor sets this value low when it wants a move to be made
 #define COM 22
@@ -22,3 +23,6 @@ void print_board_state_interface();
 
 //Prints out each move in the list 
 void print_move_list();
+
+// Sends what move was found out to the main board
+void send_move(Move newMove);

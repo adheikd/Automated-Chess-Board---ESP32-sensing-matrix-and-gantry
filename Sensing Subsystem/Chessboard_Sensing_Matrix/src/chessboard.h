@@ -6,6 +6,8 @@
 #include <Arduino.h>
 #include <Mux.h>
 
+#include <moves.h>
+
 // For PCB, to be changed to:
 /*
 #define HALL1 12

@@ -3,8 +3,7 @@
     hall effect sensors to determine the current state of the chessboard.
     These values will be stored in a 2D array.
 */
-#include "moves.h"
-#include "chessboard.h"
+#include <chessboard.h>
 
 // Spot for multiplexer definition? \/
 using namespace admux;
@@ -35,7 +34,6 @@ void init_chessboard()
       board[i][j] = false;
     }
   }
-  
 }
 
 void refresh_state()
@@ -44,7 +42,7 @@ void refresh_state()
   int hallState = 0;
   bool prevState;
   delay(10);
-  
+
   for (int i = 0; i < dim; i++)
   {
     rowselect.write(HIGH,i);
@@ -53,17 +51,18 @@ void refresh_state()
     {
       hallState = digitalRead(cols[j]);
       prevState = board[i][j];
+      PosChange lastMove = moveList.back();
       if (hallState == LOW) 
       {
-        // If the spot was previously unoccupied, adds a 'place' PosChange to the movelist
-        if (!prevState) { moveList.push_back( PosChange(i,j,Delta::place) ); }
+        // If the spot was previously unoccupied, and the position is not hte  adds a 'place' PosChange to the movelist
+        if (!prevState) { moveList.push_back( PosChange(Position(i,j),Delta::place) ); }
         board[i][j] = true;
         
       }
       else
       {
         // If the spot was previously occupied, adds a 'lift' PosChange to the movelist
-        if (prevState) { moveList.push_back( PosChange(i,j,Delta::lift) ); }
+        if (prevState) { moveList.push_back( PosChange(Position(i,j),Delta::lift) ); }
         board[i][j] = false;
       }
     }
@@ -71,3 +70,4 @@ void refresh_state()
 
   rowselect.enabled(false);
 }
+

@@ -3,7 +3,6 @@
     of what types of move has been made in a given period of time
 */
 #include <list>
-#include "chessboard.h"
 
 //Used to represent whether a move is a piece being placed or lifted
 enum Delta
@@ -12,15 +11,25 @@ enum Delta
     lift
 };
 
-//Used to represent a change of position; has indices for row, column, and 
-struct PosChange
+// Represents a position
+struct Position
 {
     int row;
     int col;
+
+    Position(int _row = 0, int _col = 0) :
+             row(_row), col(_col) {}
+};
+
+
+//Used to represent a change of position; has indices for row, column, and 
+struct PosChange
+{
+    Position pos;
     enum Delta direc;
 
-    PosChange(int _row, int _col, enum Delta _direc) :
-              row(_row), col(_col), direc(_direc) {}
+    PosChange(Position _pos, enum Delta _direc = Delta::place) :
+              pos(_pos), direc(_direc) {}
 };
 
 // Define the list of moves
@@ -36,14 +45,12 @@ enum MoveType
 
 struct Move
 {
-    int startRow;
-    int startCol;
-    int endRow;
-    int endCol;
+    Position startPos;
+    Position endPos;
     MoveType type;
 
-    Move(int _startRow = 0, int _startCol = 0, int _endRow = 0, int _endCol = 0, MoveType _type = invalid) :
-         startRow(_startRow), startCol(_startCol), endRow(_endRow), endCol(_endCol), type(_type) {}
+    Move(Position _startPos = Position(), Position _endPos = Position(), MoveType _type = invalid) :
+         startPos(_startPos), endPos(_endPos), type(_type) {}
 };
 
 // Cleans the list of move changes such that it's more easily read
