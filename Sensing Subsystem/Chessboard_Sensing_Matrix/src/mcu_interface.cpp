@@ -56,10 +56,7 @@ void print_move_list()
   Serial.println(moveList.size());
   for (PosChange m: moveList)
   {
-    Serial.print(m.pos.row);
-    Serial.print(", ");
-    Serial.print(m.pos.col);
-    Serial.print(", ");
+    Serial.printf("%u, %u, ",m.pos.row,m.pos.col);
     switch (m.direc)
     {
       case Delta::lift: 
