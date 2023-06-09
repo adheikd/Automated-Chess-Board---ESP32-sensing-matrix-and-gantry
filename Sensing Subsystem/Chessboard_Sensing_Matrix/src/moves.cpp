@@ -14,6 +14,11 @@ void clean_moves()
 
     for (PosChange p : moveList)
     {
+        if (workingList.size() == 1 && workingList.back().direc == Delta::place)
+        {
+            //Removes the first element if it's a placement (doesn't make sense to introduce a new piece)
+            workingList.pop_back();
+        }
         // If the working list is not yet of valid size, or the move is on a different position than the previous one...
         if (workingList.size() < 2 || (workingList.back().pos.row != p.pos.row || workingList.back().pos.col != p.pos.col))
         {
@@ -39,7 +44,6 @@ Move calculate_move()
 {
     PosChange start = moveList.front();
     PosChange end = moveList.back();
-
 
     if (moveList.size() < 2 || moveList.front().direc == Delta::place)
     {

@@ -21,14 +21,8 @@ void print_board_state_debug()
   {
     for (int j = 0; j < dim; j++)
     {
-      if (board[i][j])
-      {
-        Serial.print("T");
-      }
-      else
-      {
-        Serial.print("F");
-      }
+      if (board[i][j])  { Serial.print("T"); }
+      else              { Serial.print("F"); }
     }
     Serial.println();
   }
@@ -100,19 +94,19 @@ void send_move(Move newMove)
   {
     case MoveType::invalid:
     {
-      Serial.println("invalid");
+      Serial2.println("invalid");
       break;
     }
     case MoveType::shift:
     {
-      Serial.printf("shift %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row,
-                                      char_index(newMove.endPos.col), newMove.endPos.row);
+      Serial2.printf("shift %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row + 1,
+                                      char_index(newMove.endPos.col), newMove.endPos.row + 1);
       break;
     }
     case MoveType::capture:
     {
-      Serial.printf("capture %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row,
-                                        char_index(newMove.endPos.col), newMove.endPos.row);
+      Serial2.printf("capture %c%u %c%u",char_index(newMove.startPos.col),newMove.startPos.row + 1,
+                                        char_index(newMove.endPos.col), newMove.endPos.row + 1);
       break;
     }
   }

@@ -35,7 +35,7 @@ struct PosChange
 // Define the list of moves
 extern std::list<PosChange> moveList;
 
-// The different types of moves that can be made
+// The different types of moves that can be made (more can be added)
 enum MoveType
 {
     shift,
@@ -43,6 +43,7 @@ enum MoveType
     invalid
 };
 
+// A chess move
 struct Move
 {
     Position startPos;
