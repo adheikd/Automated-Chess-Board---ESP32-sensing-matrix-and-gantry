@@ -1,45 +1,65 @@
-import serial
+import machine
+import time
+import uos
 
-# Define UART serial connection parameters
-UART_PORT = '/dev/ttyUSB0'  # Replace with the appropriate serial port
-UART_BAUDRATE = 9600
+# UART configuration
+uart = machine.UART(1, baudrate=9600, tx=machine.Pin(4), rx=machine.Pin(5))
 
-# Initialize the UART serial connection
-ser = serial.Serial(UART_PORT, UART_BAUDRATE)
+# GPIO configuration
+com_pin = machine.Pin(2, machine.Pin.IN)
+button_pin = machine.Pin(13, machine.Pin.IN, machine.Pin.PULL_UP)
 
-# Command: Perform UART test
-def uart_test():
-    ser.write(b"test\n")
-    response = ser.readline().decode().strip()
-    if response == "SUCCESS":
-        print("UART test successful")
-    else:
-        print("UART test failed")
+# Constants
+START_MOVE = 0
+END_MOVE = 1
 
-# Command: Send board state
-def send_board_state():
-    ser.write(b"state\n")
-    response = ser.readline().decode().strip()
-    print("Board state:", response)
+# Function to send commands over UART
+def send_command(command):
+    uart.write(command + '\n')
+
+# Function to receive response from the sensing coprocessor
+def receive_response():
+    response = ""
+    while uart.any():
+        response += uart.read(1).decode('utf-8')
+    return response.strip()
+
+# Perform UART test
+send_command('test')
+response = receive_response()
+if response == 'SUCCESS':
+    print("UART test successful!")
+else:
+    print("UART test failed.")
+
+# Send board state request
+send_command('state')
 
 # Main loop
 while True:
-    # Wait for changes in sensor state (simulated using user input for demonstration purposes)
-    input("Press Enter to simulate sensor change...")
+    # Wait for COM pin to be set to low
+    while com_pin.value() != START_MOVE:
+        pass
 
-    # Indicate start of a move by setting the COM pin low
-    ser.write(b"COM_LOW\n")
+    # Update board state
+    # ...
 
-    # Wait for move interpretation from coprocessor
-    move_description = ser.readline().decode().strip()
+    # Wait for move to be completed (button press)
+    while button_pin.value() == 1:
+        pass
 
-    # Indicate end of the move by setting the COM pin high
-    ser.write(b"COM_HIGH\n")
+    # Calculate move and send it to the coprocessor
+    move_type = "shift"  # Placeholder, replace with actual move calculation
+    start_pos = "A1"    # Placeholder, replace with actual move calculation
+    end_pos = "A2"      # Placeholder, replace with actual move calculation
 
-    # Process the move description received from the coprocessor
-    if move_description:
-        print("Move Description:", move_description)
-        # Perform necessary actions based on the move description
-        
-    # Optionally, perform other commands like sending the board state
-    send_board_state()
+    move_command = f"{move_type} {start_pos} {end_pos}"
+    send_command(move_command)
+    response = receive_response()
+    print("Move:", response)
+
+    # Exit loop if COM pin is set to high
+    if com_pin.value() == END_MOVE:
+        break
+
+
